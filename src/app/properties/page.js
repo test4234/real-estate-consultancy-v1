@@ -1,3 +1,5 @@
+"use client";
+
 import PropertiesSection from "../../sections/PropertiesSection";
 
 export const metadata = {
