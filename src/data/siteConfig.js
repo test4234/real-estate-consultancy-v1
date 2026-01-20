@@ -23,7 +23,7 @@ const siteConfig = {
   defaultCity: "Machilipatnam",
 
   // ⚠️ MUST BE REAL DOMAIN IN PRODUCTION
-  siteUrl: "https://429d7349d255.ngrok-free.app ",
+  siteUrl: "https://real-estate-consultancy-v1.vercel.app",
 
   social: {
     facebook: "",
