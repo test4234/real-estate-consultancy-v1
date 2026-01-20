@@ -1,13 +1,20 @@
 "use client";
 
-import PropertiesSection from "../../sections/PropertiesSection";
+import dynamic from "next/dynamic";
 
 /**
- * Properties Page
- * Client-side page because it contains filters, interactions,
- * and possibly browser-only logic.
- * Metadata is handled globally in app/layout.js
+ * ❗ IMPORTANT
+ * This disables static prerendering for this page.
+ * Required because PropertiesSection uses browser-only logic.
  */
+export const dynamic = "force-dynamic";
+
+// Dynamically import to avoid SSR execution
+const PropertiesSection = dynamic(
+  () => import("../../sections/PropertiesSection"),
+  { ssr: false }
+);
+
 export default function PropertiesPage() {
   return <PropertiesSection mode="page" />;
 }
