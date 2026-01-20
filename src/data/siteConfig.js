@@ -8,6 +8,7 @@ const siteConfig = {
   tagline:
     "Real Estate & Property Services in Machilipatnam and Surrounding Regions",
 
+  // 🔹 LONG DESCRIPTION (SEO – Google)
   description:
     "Machilipatnam Properties is a local real estate and property services firm offering end-to-end support including property sales, material contracts, municipal approvals, interior works, and construction-related services across Machilipatnam, Challapally, and Vijayawada.",
 
@@ -22,7 +23,7 @@ const siteConfig = {
 
   defaultCity: "Machilipatnam",
 
-  // ⚠️ MUST BE REAL DOMAIN IN PRODUCTION
+  // ✅ REAL DEPLOYED DOMAIN
   siteUrl: "https://real-estate-consultancy-v1.vercel.app",
 
   social: {
@@ -33,6 +34,7 @@ const siteConfig = {
   },
 
   seo: {
+    // 🔹 GOOGLE TITLE (can be long)
     defaultTitle:
       "Machilipatnam Properties | Real Estate & Property Services",
 
@@ -45,9 +47,12 @@ const siteConfig = {
       "real estate Vijayawada",
     ],
 
-    // ✅ WHATSAPP IMAGE (VERY IMPORTANT)
-    // Place this image inside /public
-    // Recommended size: 1200x630
+    // 🔹 WHATSAPP / SOCIAL (SHORT & CLEAN)
+    ogTitle: "Machilipatnam Properties",
+    ogDescription:
+      "Trusted real estate, construction & property services in Machilipatnam.",
+
+    // 🔹 OG IMAGE
     ogImage: "/og-image.jpg",
   },
 

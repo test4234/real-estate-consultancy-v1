@@ -1,7 +1,5 @@
-import HeroSection from "../sections/HeroSection";
 import AuthoritySection from "../sections/AuthoritySection";
 import ServicesSection from "../sections/ServicesSection";
-import PropertiesSection from "../sections/PropertiesSection"; // ✅ NEW
 import ProjectsSection from "../sections/ProjectsSection";
 import VideosSection from "../sections/VideosSection";
 import BlogSection from "../sections/BlogSection";
@@ -9,24 +7,37 @@ import LeadSection from "../sections/LeadSection";
 import HeroPropertySearch from "../components/HeroPropertySearch";
 
 import siteConfig from "../data/siteConfig";
-import { buildMeta } from "../lib/seo";
 
 /* -----------------------------------------
-   PAGE METADATA
+   PAGE METADATA (HOME – WHATSAPP FRIENDLY)
 ------------------------------------------ */
 export async function generateMetadata() {
-  const meta = buildMeta({
-    title: "Home",
-    description: siteConfig.description,
-    path: "/",
-  });
-
   return {
-    title: meta.title,
-    description: meta.description,
-    openGraph: meta.openGraph,
+    // 🔹 Google SEO title (NO "Home |")
+    title: siteConfig.seo.defaultTitle,
+
+    // 🔹 Google description (can be long)
+    description: siteConfig.description,
+
+    // 🔹 WhatsApp / Social (SHORT & CLEAN)
+    openGraph: {
+      title: siteConfig.seo.ogTitle,
+      description: siteConfig.seo.ogDescription,
+      url: siteConfig.siteUrl,
+      siteName: siteConfig.companyName,
+      type: "website",
+      images: [
+        {
+          url: siteConfig.seo.ogImage,
+          width: 1200,
+          height: 630,
+          alt: siteConfig.companyName,
+        },
+      ],
+    },
+
     alternates: {
-      canonical: meta.canonical,
+      canonical: siteConfig.siteUrl,
     },
   };
 }
@@ -38,17 +49,13 @@ export default function Home() {
   return (
     <>
       {/* Hero */}
-      {/* <HeroSection /> */}
-      < HeroPropertySearch />
+      <HeroPropertySearch />
 
       {/* Authority / Trust */}
       <AuthoritySection />
 
       {/* Services */}
       <ServicesSection />
-
-      {/* ✅ Property Listings */}
-      {/* <PropertiesSection /> */}
 
       {/* Projects / Developments */}
       <ProjectsSection />
@@ -62,7 +69,7 @@ export default function Home() {
       {/* Lead / CTA */}
       <LeadSection />
 
-      {/* WebPage Schema (Page-specific) */}
+      {/* Schema */}
       <script
         type="application/ld+json"
         dangerouslySetInnerHTML={{

@@ -6,18 +6,21 @@ import siteConfig from "../data/siteConfig";
 import { Poppins } from "next/font/google";
 
 /* -----------------------------------------
-   GLOBAL METADATA (WhatsApp / Social Share)
+   GLOBAL METADATA (SEO + WHATSAPP)
 ------------------------------------------ */
 export const metadata = {
-  title: siteConfig.seo.defaultTitle,
-  description: siteConfig.description,
-  viewport: "width=device-width, initial-scale=1",
-
   metadataBase: new URL(siteConfig.siteUrl),
 
+  // 🔹 SEO (Google)
+  title: siteConfig.seo.defaultTitle,
+  description: siteConfig.description,
+
+  viewport: "width=device-width, initial-scale=1",
+
+  // 🔹 WHATSAPP / SOCIAL (SHORT)
   openGraph: {
-    title: siteConfig.seo.defaultTitle,
-    description: siteConfig.description,
+    title: siteConfig.seo.ogTitle,
+    description: siteConfig.seo.ogDescription,
     url: siteConfig.siteUrl,
     siteName: siteConfig.companyName,
     type: "website",
@@ -25,7 +28,7 @@ export const metadata = {
 
     images: [
       {
-        url: siteConfig.seo.ogImage, // ✅ REQUIRED for WhatsApp
+        url: siteConfig.seo.ogImage,
         width: 1200,
         height: 630,
         alt: siteConfig.companyName,
@@ -33,10 +36,11 @@ export const metadata = {
     ],
   },
 
+  // 🔹 TWITTER / X
   twitter: {
     card: "summary_large_image",
-    title: siteConfig.seo.defaultTitle,
-    description: siteConfig.description,
+    title: siteConfig.seo.ogTitle,
+    description: siteConfig.seo.ogDescription,
     images: [siteConfig.seo.ogImage],
   },
 
