@@ -1,26 +1,117 @@
 @import "tailwindcss";
 
-:root {
-  --background: #ffffff;
-  --foreground: #171717;
+@layer base {
+  :root {
+    --background: #FFFFFF;
+    --foreground: #1A1A1A;
+    --luxury-charcoal: #1A1A1A;
+    --luxury-gold: #C5A059;
+    --soft-beige: #F9F7F2;
+    --glass-white: rgba(255, 255, 255, 0.7);
+  }
+
+  html {
+    scroll-behavior: smooth;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+  }
+
+  body {
+    background: var(--background);
+    color: var(--foreground);
+    overflow-x: hidden;
+  }
+
+  ::selection {
+    background-color: var(--luxury-gold);
+    color: white;
+  }
+
+  h1, h2, h3, h4 {
+    @apply tracking-tight font-serif;
+  }
+
+  /* Global scrollbar (page only) */
+  body::-webkit-scrollbar {
+    width: 6px;
+  }
+  body::-webkit-scrollbar-track {
+    background: var(--background);
+  }
+  body::-webkit-scrollbar-thumb {
+    background: #E5E5E5;
+    border-radius: 10px;
+  }
+  body::-webkit-scrollbar-thumb:hover {
+    background: var(--luxury-gold);
+  }
 }
 
 @theme inline {
   --color-background: var(--background);
   --color-foreground: var(--foreground);
-  --font-sans: var(--font-geist-sans);
-  --font-mono: var(--font-geist-mono);
+  --color-luxury-charcoal: var(--luxury-charcoal);
+  --color-luxury-gold: var(--luxury-gold);
+  --color-soft-beige: var(--soft-beige);
+
+  --shadow-premium: 0 20px 50px -12px rgba(0, 0, 0, 0.08);
 }
 
-@media (prefers-color-scheme: dark) {
-  :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
+@layer utilities {
+  .animate-fade-in {
+    animation: fadeIn 1.2s ease-out forwards;
+  }
+
+  @keyframes fadeIn {
+    from {
+      opacity: 0;
+      transform: translateY(10px);
+    }
+    to {
+      opacity: 1;
+      transform: translateY(0);
+    }
+  }
+
+  .text-shadow-subtle {
+    text-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
   }
 }
 
-body {
-  background: var(--background);
-  color: var(--foreground);
-  font-family: Arial, Helvetica, sans-serif;
+/* Hide scrollbar but keep scroll */
+.scrollbar-hide {
+  -ms-overflow-style: none;
+  scrollbar-width: none;
 }
+
+.scrollbar-hide::-webkit-scrollbar {
+  display: none;
+}
+
+
+/* ===== Scroll Reveal Animations ===== */
+
+.reveal {
+  opacity: 0;
+  transform: translateY(24px);
+  transition: opacity 700ms ease, transform 700ms ease;
+}
+
+.reveal-visible {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+/* Variants */
+.reveal-fade {
+  transform: none;
+}
+
+.reveal-scale {
+  transform: scale(0.96);
+}
+
+.reveal-scale.reveal-visible {
+  transform: scale(1);
+}
+
