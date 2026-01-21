@@ -61,7 +61,7 @@ const siteConfig = {
     role: "Founder & Principal – Real Estate & Property Development",
     experience: 12,
     education: "Diploma in Civil Engineering",
-    image: "/owner.png",
+    image: "/owner.jpg",
     bio:
       "Ravi Teja Reddy is a local real estate developer with over 12 years of experience in residential and commercial property development. His work includes independent houses, apartment projects, residential plot developments, and small commercial properties across Machilipatnam and nearby regions. He is actively involved in project planning, municipal approvals, construction coordination, and on-site execution.",
   },
