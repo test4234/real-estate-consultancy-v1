@@ -2,10 +2,19 @@
 
 import { useState, useEffect } from "react";
 
+function isEqual(a, b) {
+  return (
+    a.purpose === b.purpose &&
+    a.category === b.category &&
+    a.city === b.city
+  );
+}
+
 export default function PropertyFilters({
   onSearch,
   onChange,
   values,
+  cities = [],
 }) {
   const [draftFilters, setDraftFilters] = useState({
     purpose: "all",
@@ -13,12 +22,12 @@ export default function PropertyFilters({
     city: "all",
   });
 
-  // 🔁 SYNC FROM PARENT (URL → PAGE → FILTER UI)
+  // 🔁 SYNC FROM PARENT (SAFE)
   useEffect(() => {
-    if (values) {
+    if (values && !isEqual(values, draftFilters)) {
       setDraftFilters(values);
     }
-  }, [values]);
+  }, [values]); // ✅ no loop now
 
   const update = (key, value) => {
     setDraftFilters((prev) => ({
@@ -101,8 +110,11 @@ export default function PropertyFilters({
             className="w-full rounded-md border border-gray-300 px-3 py-2.5 text-sm"
           >
             <option value="all">All Cities</option>
-            <option value="mumbai">Mumbai</option>
-            <option value="bangalore">Bangalore</option>
+            {cities.map((city) => (
+              <option key={city} value={city}>
+                {city.replace(/-/g, " ").replace(/\b\w/g, (l) => l.toUpperCase())}
+              </option>
+            ))}
           </select>
         </div>
       </div>

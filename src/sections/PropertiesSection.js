@@ -3,6 +3,7 @@
 import { useState, useMemo, useEffect } from "react";
 import { useSearchParams } from "next/navigation";
 import Link from "next/link";
+
 import properties from "../data/properties";
 import PropertyCard from "../components/PropertyCard";
 import PropertyFilters from "../components/PropertyFilters";
@@ -12,6 +13,17 @@ const DEFAULT_LIMIT = 3;
 export default function PropertiesSection({ mode = "home" }) {
   const isPage = mode === "page";
   const searchParams = useSearchParams();
+
+  // ✅ FIX: Generate cities safely for client components
+  const cities = useMemo(() => {
+    return Array.from(
+      new Set(
+        properties
+          .map((p) => p.city)
+          .filter(Boolean)
+      )
+    ).sort();
+  }, []);
 
   const [appliedFilters, setAppliedFilters] = useState({
     purpose: searchParams.get("purpose") || "all",
@@ -25,9 +37,11 @@ export default function PropertiesSection({ mode = "home" }) {
 
   const [loading, setLoading] = useState(false);
 
+  // 🔁 Sync filters when URL changes
   useEffect(() => {
     setLoading(true);
-    setTimeout(() => {
+
+    const timer = setTimeout(() => {
       setAppliedFilters({
         purpose: searchParams.get("purpose") || "all",
         category: searchParams.get("category") || "all",
@@ -36,8 +50,11 @@ export default function PropertiesSection({ mode = "home" }) {
       setHasSearched(true);
       setLoading(false);
     }, 100);
+
+    return () => clearTimeout(timer);
   }, [searchParams]);
 
+  // 🔍 Filter logic
   const filteredProperties = useMemo(() => {
     return properties.filter((p) => {
       return (
@@ -45,7 +62,8 @@ export default function PropertiesSection({ mode = "home" }) {
           p.purpose === appliedFilters.purpose) &&
         (appliedFilters.category === "all" ||
           p.category === appliedFilters.category) &&
-        (appliedFilters.city === "all" || p.city === appliedFilters.city)
+        (appliedFilters.city === "all" ||
+          p.city === appliedFilters.city)
       );
     });
   }, [appliedFilters]);
@@ -55,8 +73,10 @@ export default function PropertiesSection({ mode = "home" }) {
       ? filteredProperties
       : properties.slice(0, DEFAULT_LIMIT);
 
+  // ✅ Search handler
   const handleSearch = (filters) => {
     setLoading(true);
+
     setTimeout(() => {
       setAppliedFilters(filters);
       setHasSearched(true);
@@ -67,6 +87,7 @@ export default function PropertiesSection({ mode = "home" }) {
   return (
     <section className="py-10 bg-gray-50">
       <div className="max-w-7xl mx-auto px-6 lg:px-12">
+        {/* Header */}
         <div className="max-w-3xl mb-16">
           <span className="text-luxury-gold text-[11px] uppercase tracking-[0.35em] block mb-4">
             Properties
@@ -76,12 +97,14 @@ export default function PropertiesSection({ mode = "home" }) {
           </h2>
         </div>
 
-       <PropertyFilters
-  values={appliedFilters}
-  onSearch={handleSearch}
-/>
+        {/* Filters */}
+        <PropertyFilters
+          values={appliedFilters}
+          onSearch={handleSearch}
+          cities={cities}
+        />
 
-
+        {/* Results */}
         <div className="mt-16">
           {loading ? (
             <div className="py-32 text-center">
